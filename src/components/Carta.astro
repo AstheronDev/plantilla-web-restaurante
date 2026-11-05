@@ -1,0 +1,88 @@
+---
+import CategoriaCarta from './CategoriaCarta.astro';
+import Plato from './Plato.astro';
+import negocio from '../data/negocio.json';
+import { agrupar, aPlatos } from '../lib/carta';
+
+// El respaldo va en el HTML: se ve al instante, sin JavaScript y lo indexan los buscadores.
+// Si la hoja responde bien, el script lo sustituye por los datos actuales.
+const categorias = agrupar(aPlatos(negocio.cartaRespaldo));
+---
+
+<section id="carta" class="mx-auto max-w-6xl px-4 py-16 sm:py-24" data-carta-csv={negocio.cartaCsv}>
+  <p class="font-display text-sm font-semibold tracking-[0.14em] text-acento-texto uppercase">Nuestra cocina</p>
+  <h2 class="mt-2 font-display text-3xl font-bold tracking-tight sm:text-4xl">La carta</h2>
+
+  <div data-carta class="mt-8 grid items-start gap-5 lg:grid-cols-2">
+    {
+      categorias.map(({ nombre, platos }) => (
+        <CategoriaCarta nombre={nombre}>
+          {platos.map((plato) => (
+            <Plato {...plato} />
+          ))}
+        </CategoriaCarta>
+      ))
+    }
+  </div>
+
+  <template data-plantilla-categoria><CategoriaCarta /></template>
+  <template data-plantilla-plato><Plato /></template>
+</section>
+
+<script>
+  import { agrupar, aPlatos, csvAFilas, type Categoria } from '../lib/carta';
+
+  const TIEMPO_MAXIMO_MS = 5000;
+
+  const seccion = document.querySelector<HTMLElement>('[data-carta-csv]')!;
+  const contenedor = seccion.querySelector<HTMLElement>('[data-carta]')!;
+  const plantillaCategoria = seccion.querySelector<HTMLTemplateElement>('[data-plantilla-categoria]')!;
+  const plantillaPlato = seccion.querySelector<HTMLTemplateElement>('[data-plantilla-plato]')!;
+
+  /** Clona una plantilla. El contenido de la hoja se inserta siempre como texto, nunca como HTML. */
+  function clonar(plantilla: HTMLTemplateElement, campos: Record<string, string>) {
+    const elemento = plantilla.content.firstElementChild!.cloneNode(true) as HTMLElement;
+    for (const [campo, valor] of Object.entries(campos)) {
+      elemento.querySelector(`[data-campo="${campo}"]`)!.textContent = valor;
+    }
+    return elemento;
+  }
+
+  function pintar(categorias: Categoria[]) {
+    const bloques = categorias.map(({ nombre, platos }) => {
+      const bloque = clonar(plantillaCategoria, { categoria: nombre });
+      bloque.querySelector('[data-platos]')!.append(
+        ...platos.map(({ plato, descripcion, precio, agotado }) => {
+          const fila = clonar(plantillaPlato, { plato, descripcion, precio });
+          fila.toggleAttribute('data-agotado', agotado);
+          return fila;
+        }),
+      );
+      return bloque;
+    });
+
+    contenedor.replaceChildren(...bloques);
+  }
+
+  async function cargarCarta() {
+    const controlador = new AbortController();
+    const temporizador = setTimeout(() => controlador.abort(), TIEMPO_MAXIMO_MS);
+
+    try {
+      const respuesta = await fetch(seccion.dataset.cartaCsv!, { signal: controlador.signal });
+      if (!respuesta.ok) throw new Error(`HTTP ${respuesta.status}`);
+
+      // Una hoja no publicada puede responder 200 con HTML: sin platos válidos no se toca el respaldo.
+      const categorias = agrupar(aPlatos(csvAFilas(await respuesta.text())));
+      if (!categorias.length) throw new Error('CSV sin platos');
+
+      pintar(categorias);
+    } catch (error) {
+      console.warn('Carta: se mantiene el respaldo.', error);
+    } finally {
+      clearTimeout(temporizador);
+    }
+  }
+
+  cargarCarta();
+</script>

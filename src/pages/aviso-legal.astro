@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import negocio from '../data/negocio.json';
+
+const { legal } = negocio;
+---
+
+<Base titulo={`Aviso Legal | ${negocio.nombre}`} descripcion={`Aviso legal e información del titular de ${negocio.nombre}.`}>
+  <main class="legal">
+    <h1>Aviso Legal</h1>
+    <p>Última actualización: {legal.actualizado}.</p>
+
+    <h2>1. Datos identificativos</h2>
+    <p>
+      En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y
+      de Comercio Electrónico (LSSI-CE), se informa de los datos del titular de este sitio web:
+    </p>
+    <ul>
+      <li><strong>Titular:</strong> {legal.titular}</li>
+      <li><strong>NIF/CIF:</strong> {legal.nif}</li>
+      <li><strong>Domicilio:</strong> {legal.domicilio}</li>
+      <li><strong>Teléfono:</strong> {negocio.telefono}</li>
+      <li><strong>Correo electrónico:</strong> <a href={`mailto:${legal.email}`}>{legal.email}</a></li>
+      {legal.registro && <li><strong>Datos registrales:</strong> {legal.registro}</li>}
+    </ul>
+
+    <h2>2. Objeto</h2>
+    <p>
+      Este sitio web ofrece información sobre {negocio.nombre}: su carta, horarios, ubicación y vías de contacto. Los
+      precios y la disponibilidad de los platos son orientativos y pueden variar sin previo aviso; en caso de
+      discrepancia prevalece la información facilitada en el establecimiento.
+    </p>
+
+    <h2>3. Condiciones de uso</h2>
+    <p>
+      El acceso a este sitio web es gratuito y no requiere registro. Quien lo utiliza se compromete a hacerlo de forma
+      lícita y a no dañar su funcionamiento ni el de los sistemas que lo alojan.
+    </p>
+
+    <h2>4. Propiedad intelectual e industrial</h2>
+    <p>
+      Los textos, diseños, marcas y demás contenidos de este sitio web pertenecen a su titular o se utilizan con
+      autorización. Queda prohibida su reproducción, distribución o transformación con fines comerciales sin
+      autorización expresa, de acuerdo con el Real Decreto Legislativo 1/1996, de la Ley de Propiedad Intelectual.
+    </p>
+
+    <h2>5. Enlaces a terceros</h2>
+    <p>
+      Este sitio web incluye enlaces a servicios externos como Google Maps, WhatsApp, Instagram o Uber Eats. El titular
+      no controla esos sitios ni responde de sus contenidos o condiciones, que se rigen por sus propias políticas.
+    </p>
+
+    <h2>6. Responsabilidad</h2>
+    <p>
+      El titular procura que la información publicada sea correcta y esté actualizada, pero no garantiza la ausencia de
+      errores ni la disponibilidad ininterrumpida del sitio web, y no responde de los daños derivados de interrupciones
+      ajenas a su control.
+    </p>
+
+    <h2>7. Protección de datos</h2>
+    <p>
+      El tratamiento de datos personales se describe en la <a href="/privacidad/">Política de Privacidad</a>.
+    </p>
+
+    <h2>8. Legislación aplicable</h2>
+    <p>
+      Este aviso legal se rige por la legislación española. Las partes se someterán a los juzgados y tribunales que
+      correspondan conforme a la normativa aplicable.
+    </p>
+  </main>
+</Base>

@@ -1,0 +1,28 @@
+---
+// Única definición del marcado de un plato: la usan el HTML estático (respaldo)
+// y la <template> que clona el script al pintar los datos de la hoja.
+interface Props {
+  plato?: string;
+  descripcion?: string;
+  precio?: string;
+  agotado?: boolean;
+}
+
+const { plato, descripcion, precio, agotado = false } = Astro.props;
+---
+
+<li data-plato data-agotado={agotado ? '' : undefined} class="group py-4 first:pt-0 last:pb-0">
+  <div class="flex items-baseline gap-2">
+    <h4 data-campo="plato" class="font-display text-lg font-semibold group-data-agotado:text-suave group-data-agotado:line-through">
+      {plato}
+    </h4>
+    <span class="hidden shrink-0 rounded-full bg-linea px-2 py-0.5 text-xs font-semibold group-data-agotado:inline">
+      Agotado
+    </span>
+    <span aria-hidden="true" class="min-w-4 flex-1 translate-y-[-0.2em] border-b-2 border-dotted border-linea"></span>
+    <span data-campo="precio" class="shrink-0 font-semibold whitespace-nowrap tabular-nums group-data-agotado:text-suave">
+      {precio}
+    </span>
+  </div>
+  <p data-campo="descripcion" class="mt-1 pr-14 text-sm leading-relaxed text-suave empty:hidden">{descripcion}</p>
+</li>

@@ -1,0 +1,57 @@
+{
+  "nombre": "Candela Restaurante",
+  "sector": "Restaurante y Tapas",
+  "ciudad": "Linares",
+  "url": "https://www.example.com",
+  "titular": "Cocina de siempre, con mucha candela",
+  "lema": "Gastronomía local y cocina tradicional en Linares",
+  "valoracion": { "nota": "4.7", "fuente": "Google" },
+  "telefono": "+34622308871",
+  "whatsapp": "34622308871",
+  "direccion": "Calle Orquídea, 36, 23700 Linares, Jaén",
+  "mapaUrl": "https://maps.google.com/?q=Candela+Linares",
+  "horario": [
+    { "dias": "Martes a Domingo", "horas": "12:00 - 16:00 y 20:00 - 00:00" }
+  ],
+  "puntosFuertes": [
+    {
+      "icono": "terraza",
+      "titulo": "Terraza",
+      "texto": "Mesas al aire libre para alargar la sobremesa con buen tiempo."
+    },
+    {
+      "icono": "producto",
+      "titulo": "Producto local",
+      "texto": "Ingredientes de la tierra y recetas de las de toda la vida."
+    },
+    {
+      "icono": "familia",
+      "titulo": "Ambiente familiar",
+      "texto": "Un sitio tranquilo para venir con los tuyos, sin prisas."
+    }
+  ],
+  "cartaCsv": "https://docs.google.com/spreadsheets/d/e/2PACX-1v.../pub?output=csv",
+  "cartaRespaldo": [
+    { "categoria": "Especialidades", "plato": "Flamenquín Casero", "descripcion": "Lomo de cerdo seleccionado y jamón ibérico", "precio": "12,00", "disponible": "SI" },
+    { "categoria": "Tapas", "plato": "Patatas Bravas Candela", "descripcion": "Salsa brava casera picante", "precio": "4,50", "disponible": "SI" }
+  ],
+  "redes": {
+    "instagram": "https://www.instagram.com/restaurante_candela_linares/",
+    "uberEats": "https://www.ubereats.com/store/candela-x-zalamera/"
+  },
+  "colores": {
+    "principal": "#1E293B",
+    "acento": "#D97706"
+  },
+  "analitica": {
+    "cloudflareToken": ""
+  },
+  "legal": {
+    "titular": "PENDIENTE: nombre o razón social",
+    "nif": "PENDIENTE: NIF/CIF",
+    "domicilio": "Calle Orquídea, 36, 23700 Linares, Jaén",
+    "email": "PENDIENTE: email de contacto",
+    "registro": "PENDIENTE: datos registrales, o eliminar el texto si no procede",
+    "actualizado": "5 de noviembre de 2026"
+  }
+}

@@ -1,0 +1,143 @@
+---
+import Carta from '../components/Carta.astro';
+import Base from '../layouts/Base.astro';
+import negocio from '../data/negocio.json';
+import { enlaceTelefono, enlaceWhatsapp } from '../lib/enlaces';
+
+// Trazos de 24×24 para los iconos de "puntosFuertes". Añade aquí nuevas claves de "icono".
+const iconos: Record<string, string> = {
+  terraza:
+    'M12 3a9 9 0 0 1 9 9H3a9 9 0 0 1 9-9Zm0 0V2m0 10v8a2 2 0 0 0 4 0',
+  producto:
+    'M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10ZM2 21c0-3 1.85-5.36 5.08-6',
+  familia:
+    'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+};
+
+const claseCta =
+  'inline-flex min-h-12 items-center justify-center rounded-full px-7 font-display font-semibold transition-transform hover:-translate-y-0.5';
+---
+
+<Base>
+  <main>
+    <section class="relative isolate overflow-hidden bg-principal text-sobre-principal">
+      <div
+        aria-hidden="true"
+        class="absolute inset-x-0 bottom-0 -z-10 h-[75%] bg-[radial-gradient(ellipse_75%_100%_at_75%_100%,color-mix(in_oklab,var(--marca-acento)_55%,transparent),transparent_72%)]"
+      >
+      </div>
+      <div class="mx-auto flex min-h-[calc(100svh-6.5rem)] max-w-6xl flex-col justify-center px-4 py-16 sm:min-h-[38rem] sm:py-24">
+        <p
+          class="inline-flex w-fit items-center gap-1.5 rounded-full border border-sobre-principal/25 px-3.5 py-1.5 text-sm font-medium"
+        >
+          {negocio.valoracion.nota} <span class="text-acento">★</span> en {negocio.valoracion.fuente}
+        </p>
+        <h1
+          class="mt-6 max-w-3xl font-display text-[2.75rem] leading-[1.05] font-bold tracking-tight text-balance sm:text-6xl lg:text-7xl"
+        >
+          {negocio.titular}
+        </h1>
+        <p class="mt-5 max-w-xl text-lg opacity-90 sm:text-xl">{negocio.lema}</p>
+        <address class="mt-3 text-sm not-italic opacity-75">{negocio.direccion}</address>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="#carta" class:list={[claseCta, 'bg-acento text-sobre-acento']}>Ver Carta</a>
+          <a
+            href={enlaceWhatsapp}
+            rel="noopener"
+            target="_blank"
+            class:list={[claseCta, 'border border-sobre-principal/40 hover:bg-sobre-principal/10']}
+          >
+            Reservar Mesa
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Puntos fuertes" class="border-b border-linea bg-white">
+      <ul class="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-3 sm:py-16">
+        {
+          negocio.puntosFuertes.map(({ icono, titulo, texto }) => (
+            <li class="flex gap-4 sm:block">
+              <svg
+                viewBox="0 0 24 24"
+                class="size-8 shrink-0 text-acento-texto"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d={iconos[icono]} />
+              </svg>
+              <div>
+                <h2 class="font-display text-xl font-semibold sm:mt-4">{titulo}</h2>
+                <p class="mt-1 leading-relaxed text-suave">{texto}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <Carta />
+
+    <section id="ubicacion" class="border-t border-linea bg-white">
+      <div class="mx-auto max-w-6xl px-4 py-16 sm:py-24">
+        <p class="font-display text-sm font-semibold tracking-[0.14em] text-acento-texto uppercase">Te esperamos</p>
+        <h2 class="mt-2 font-display text-3xl font-bold tracking-tight sm:text-4xl">Ubicación y horarios</h2>
+
+        <div class="mt-8 grid gap-10 md:grid-cols-3">
+          <div>
+            <h3 class="font-display text-lg font-semibold">Horario</h3>
+            <dl class="mt-3 space-y-3">
+              {
+                negocio.horario.map(({ dias, horas }) => (
+                  <div>
+                    <dt class="font-medium">{dias}</dt>
+                    <dd class="text-suave tabular-nums">{horas}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
+
+          <div>
+            <h3 class="font-display text-lg font-semibold">Dirección</h3>
+            <address class="mt-3 text-suave not-italic">{negocio.direccion}</address>
+            <a
+              href={negocio.mapaUrl}
+              rel="noopener"
+              target="_blank"
+              class:list={[claseCta, 'mt-5 w-full bg-principal text-sobre-principal sm:w-auto']}
+            >
+              Cómo llegar
+            </a>
+          </div>
+
+          <div id="contacto">
+            <h3 class="font-display text-lg font-semibold">Contacto</h3>
+            <ul class="mt-3 space-y-2 font-medium">
+              <li><a href={enlaceTelefono} class="underline-offset-2 hover:underline">{negocio.telefono}</a></li>
+              <li>
+                <a href={enlaceWhatsapp} rel="noopener" target="_blank" class="underline-offset-2 hover:underline">
+                  WhatsApp
+                </a>
+              </li>
+              <li>
+                <a href={negocio.redes.instagram} rel="noopener" target="_blank" class="underline-offset-2 hover:underline">
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a href={negocio.redes.uberEats} rel="noopener" target="_blank" class="underline-offset-2 hover:underline">
+                  Pedir en Uber Eats
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

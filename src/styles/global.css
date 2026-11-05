@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/outfit';
+
+/* Los colores de marca llegan desde negocio.json mediante variables en <html> (ver Base.astro). */
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Outfit Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-principal: var(--marca-principal);
+  --color-sobre-principal: var(--marca-sobre-principal);
+  --color-acento: var(--marca-acento);
+  --color-sobre-acento: var(--marca-sobre-acento);
+
+  /* Derivados: mantienen la armonía y el contraste con cualquier color de cliente. */
+  --color-acento-texto: color-mix(in oklab, var(--marca-acento) 72%, black);
+  --color-crema: color-mix(in oklab, var(--marca-acento) 5%, white);
+  --color-linea: color-mix(in oklab, var(--marca-principal) 14%, white);
+  --color-suave: color-mix(in oklab, var(--marca-principal) 74%, white);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  @apply bg-crema font-sans text-principal antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--marca-acento);
+  outline-offset: 2px;
+}
+
+/* Páginas legales */
+.legal {
+  @apply mx-auto max-w-2xl px-4 py-12 leading-relaxed text-suave sm:py-16;
+}
+
+.legal h1 {
+  @apply font-display text-3xl font-bold text-principal sm:text-4xl;
+}
+
+.legal h2 {
+  @apply mt-10 mb-3 font-display text-xl font-semibold text-principal;
+}
+
+.legal p,
+.legal ul {
+  @apply mt-3;
+}
+
+.legal ul {
+  @apply list-disc space-y-1 pl-5;
+}
+
+.legal a {
+  @apply font-medium text-acento-texto underline underline-offset-2;
+}
+
+.legal strong {
+  @apply font-semibold text-principal;
+}

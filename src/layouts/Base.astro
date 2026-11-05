@@ -1,0 +1,97 @@
+---
+import '../styles/global.css';
+import Cabecera from '../components/Cabecera.astro';
+import Pie from '../components/Pie.astro';
+import WhatsappFlotante from '../components/WhatsappFlotante.astro';
+import negocio from '../data/negocio.json';
+
+interface Props {
+  titulo?: string;
+  descripcion?: string;
+}
+
+const {
+  titulo = `${negocio.nombre} | ${negocio.sector} en ${negocio.ciudad}`,
+  descripcion = `${negocio.lema}. ${negocio.direccion}. Consulta la carta y reserva mesa por WhatsApp.`,
+} = Astro.props;
+
+const canonica = new URL(Astro.url.pathname, Astro.site);
+const imagenOg = new URL('/og.png', Astro.site);
+
+const luminancia = (hex: string) => {
+  const canales = hex.match(/[0-9a-f]{2}/gi)!.map((c) => parseInt(c, 16) / 255);
+  const [r, g, b] = canales.map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+
+// Elige texto claro u oscuro según el color de fondo que ponga cada cliente.
+const textoSobre = (hex: string) => (luminancia(hex) > 0.179 ? '#0F172A' : '#FFFFFF');
+
+const variablesMarca = [
+  `--marca-principal:${negocio.colores.principal}`,
+  `--marca-sobre-principal:${textoSobre(negocio.colores.principal)}`,
+  `--marca-acento:${negocio.colores.acento}`,
+  `--marca-sobre-acento:${textoSobre(negocio.colores.acento)}`,
+].join(';');
+
+const datosEstructurados = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: negocio.nombre,
+  description: negocio.lema,
+  url: negocio.url,
+  image: imagenOg,
+  telephone: negocio.telefono,
+  hasMap: negocio.mapaUrl,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: negocio.direccion,
+    addressLocality: negocio.ciudad,
+    addressCountry: 'ES',
+  },
+  sameAs: Object.values(negocio.redes),
+}).replaceAll('<', '\\u003c');
+---
+
+<!doctype html>
+<html lang="es" style={variablesMarca}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <meta name="theme-color" content={negocio.colores.principal} />
+    <link rel="canonical" href={canonica} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={negocio.nombre} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:image" content={imagenOg} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={datosEstructurados} is:inline />
+
+    {
+      negocio.analitica.cloudflareToken && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: negocio.analitica.cloudflareToken })}
+        />
+      )
+    }
+  </head>
+  <body class="min-h-svh">
+    <Cabecera />
+    <slot />
+    <Pie />
+    <WhatsappFlotante />
+  </body>
+</html>

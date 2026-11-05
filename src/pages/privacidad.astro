@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import negocio from '../data/negocio.json';
+
+const { legal } = negocio;
+---
+
+<Base
+  titulo={`Política de Privacidad | ${negocio.nombre}`}
+  descripcion={`Cómo trata ${negocio.nombre} los datos en este sitio web: sin cookies y sin almacenar datos personales.`}
+>
+  <main class="legal">
+    <h1>Política de Privacidad</h1>
+    <p>Última actualización: {legal.actualizado}.</p>
+
+    <h2>1. Responsable</h2>
+    <ul>
+      <li><strong>Responsable:</strong> {legal.titular}</li>
+      <li><strong>NIF/CIF:</strong> {legal.nif}</li>
+      <li><strong>Domicilio:</strong> {legal.domicilio}</li>
+      <li><strong>Correo electrónico:</strong> <a href={`mailto:${legal.email}`}>{legal.email}</a></li>
+    </ul>
+
+    <h2>2. Este sitio no almacena datos personales</h2>
+    <p>
+      Este sitio web es informativo. No tiene formularios, registro de usuarios ni base de datos, y no guarda datos
+      personales de quienes lo visitan.
+    </p>
+
+    <h2>3. Cookies y analítica</h2>
+    <p>
+      Este sitio web <strong>no utiliza cookies</strong> ni tecnologías equivalentes de seguimiento en tu dispositivo,
+      por lo que no muestra un aviso de cookies.
+    </p>
+    <p>
+      Para conocer el uso global de la web empleamos Cloudflare Web Analytics, una analítica sin cookies que ofrece
+      estadísticas agregadas (páginas vistas, país o tipo de dispositivo) y no identifica a personas concretas ni
+      permite seguirlas entre sitios web.
+    </p>
+
+    <h2>4. Servicios que intervienen al visitar la web</h2>
+    <p>
+      Como en cualquier sitio web, tu navegador comparte datos técnicos, como la dirección IP, con los servidores a los
+      que se conecta. Estos proveedores actúan bajo sus propias condiciones y pueden tratar esos datos fuera del Espacio
+      Económico Europeo con las garantías previstas en el RGPD:
+    </p>
+    <ul>
+      <li><strong>Cloudflare, Inc.:</strong> alojamiento de la web y analítica.</li>
+      <li>
+        <strong>Google (Google Sheets):</strong> tu navegador descarga de Google la versión actual de la carta.
+      </li>
+    </ul>
+
+    <h2>5. Si contactas con nosotros</h2>
+    <p>
+      Si nos escribes por WhatsApp, Instagram o correo electrónico, o nos llamas por teléfono, usaremos tu nombre, tu
+      número o tu dirección, y los datos de tu mensaje, únicamente para atender tu consulta o gestionar tu reserva. La
+      base jurídica es tu solicitud y nuestro interés en atenderla (art. 6.1.b y 6.1.f del RGPD). Conservaremos estos
+      datos solo el tiempo necesario para ello. Esas conversaciones se realizan en plataformas de terceros, sujetas a
+      sus propias políticas de privacidad.
+    </p>
+
+    <h2>6. Enlaces externos</h2>
+    <p>
+      Los enlaces a Google Maps, WhatsApp, Instagram o Uber Eats te llevan a servicios de terceros. Al abrirlos se
+      aplican sus políticas de privacidad y de cookies.
+    </p>
+
+    <h2>7. Tus derechos</h2>
+    <p>
+      Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a
+      <a href={`mailto:${legal.email}`}>{legal.email}</a>. También puedes reclamar ante la Agencia Española de Protección
+      de Datos (<a href="https://www.aepd.es" rel="noopener" target="_blank">www.aepd.es</a>).
+    </p>
+  </main>
+</Base>

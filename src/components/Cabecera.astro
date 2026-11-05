@@ -1,0 +1,24 @@
+---
+import negocio from '../data/negocio.json';
+
+const enlaces = [
+  { href: '/#carta', texto: 'Carta' },
+  { href: '/#ubicacion', texto: 'Ubicación' },
+  { href: '/#contacto', texto: 'Contacto' },
+];
+---
+
+<header class="sticky top-0 z-40 bg-principal text-sobre-principal">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 px-4 py-2.5 sm:py-3.5">
+    <a href="/" class="font-display text-base font-bold tracking-tight sm:text-lg">{negocio.nombre}</a>
+    <nav aria-label="Principal" class="-mx-1.5 flex text-[13px] font-medium sm:text-sm">
+      {
+        enlaces.map(({ href, texto }) => (
+          <a href={href} class="rounded px-1.5 py-1.5 opacity-85 transition-opacity hover:opacity-100">
+            {texto}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

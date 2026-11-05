@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import negocio from '../data/negocio.json';
+---
+
+<Base titulo={`Página no encontrada | ${negocio.nombre}`}>
+  <main class="mx-auto flex min-h-[60svh] max-w-xl flex-col items-center justify-center px-4 py-16 text-center">
+    <p class="font-display text-6xl font-bold text-acento-texto">404</p>
+    <h1 class="mt-4 font-display text-2xl font-semibold">Esta página no existe</h1>
+    <a
+      href="/"
+      class="mt-8 inline-flex min-h-12 items-center rounded-full bg-principal px-7 font-display font-semibold text-sobre-principal"
+    >
+      Volver al inicio
+    </a>
+  </main>
+</Base>

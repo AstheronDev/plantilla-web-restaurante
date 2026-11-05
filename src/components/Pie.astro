@@ -1,0 +1,19 @@
+---
+import negocio from '../data/negocio.json';
+
+const anio = new Date().getFullYear();
+---
+
+<footer class="bg-principal text-sobre-principal">
+  <div
+    class="mx-auto flex max-w-6xl flex-col gap-3 px-4 pt-8 pb-24 text-sm sm:flex-row sm:items-center sm:justify-between sm:pb-8"
+  >
+    <p class="opacity-75">© {anio} {negocio.nombre}</p>
+    <nav aria-label="Legal y redes" class="flex flex-wrap gap-x-5 gap-y-1 opacity-75">
+      <a href="/aviso-legal/" class="py-1 hover:underline">Aviso Legal</a>
+      <a href="/privacidad/" class="py-1 hover:underline">Política de Privacidad</a>
+      <a href={negocio.redes.instagram} rel="noopener" target="_blank" class="py-1 hover:underline">Instagram</a>
+      <a href={negocio.redes.uberEats} rel="noopener" target="_blank" class="py-1 hover:underline">Uber Eats</a>
+    </nav>
+  </div>
+</footer>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  nombre?: string;
+}
+
+const { nombre } = Astro.props;
+---
+
+<section data-categoria class="rounded-2xl border border-linea bg-white p-5 sm:p-7">
+  <h3 data-campo="categoria" class="mb-5 font-display text-sm font-semibold tracking-[0.14em] text-acento-texto uppercase">
+    {nombre}
+  </h3>
+  <ul data-platos class="divide-y divide-linea">
+    <slot />
+  </ul>
+</section>
